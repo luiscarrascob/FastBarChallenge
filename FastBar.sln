@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastBar", "FastBar\FastBar.csproj", "{C307F7A6-113C-4DA5-A2CC-CF4D2CEDA2BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastBar.Tests", "FastBar.Tests\FastBar.Tests.csproj", "{688935EB-7C68-476D-824F-B4BD20883930}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C307F7A6-113C-4DA5-A2CC-CF4D2CEDA2BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C307F7A6-113C-4DA5-A2CC-CF4D2CEDA2BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C307F7A6-113C-4DA5-A2CC-CF4D2CEDA2BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C307F7A6-113C-4DA5-A2CC-CF4D2CEDA2BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{688935EB-7C68-476D-824F-B4BD20883930}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{688935EB-7C68-476D-824F-B4BD20883930}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{688935EB-7C68-476D-824F-B4BD20883930}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{688935EB-7C68-476D-824F-B4BD20883930}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
