@@ -1,31 +1,25 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "";
 }
 
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    @Html.ActionLink("Register", "Register", "Account", null, new { @class = "btn big-ass-button animate-fast" })   
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        <h2>What we do</h2>
+        <p>Everyone hates long bar lines. They reduce attendee satisfaction and impact bar revenue.</p>
+        <p>FastBar solves the problem of long bar lines for special events with a simple, cashless, high-speed payment solution that improves attendee satisfaction, and increases bar revenue.</p>        
     </div>
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <h2>Is this secure?</h2>
+        <p>FastBar is more secure than using cash or credit card.</p>
+        <p>If you lose cash, it's gone forever. If you lose your credit card, you're now spending hours of your time cancelling your card, getting a new one and re-linking it to all of the websites you use and automatic bills you have linked to it.</p>
+        <p>Your FastBar wristband won't fall off but if you did lose it, just go back to the registration station at the event, we’ll cancel the old one and give you a new one.</p>
     </div>
     <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        <h2>What's the cost?</h2>
+        <p>FastBar is free for you, the attendee.</p>        
     </div>
 </div>
