@@ -84,9 +84,7 @@ namespace FastBar.Controllers
                 Logins = await UserManager.GetLoginsAsync(userId),
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
                 creditCard = creditCard
-            };
-
-            //TODO: Try to retrieve CC details from database
+            };            
 
             return View(model);
         }
