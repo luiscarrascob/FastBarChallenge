@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using FastBar.Models;
+using System.Configuration;
 
 namespace FastBar
 {
@@ -55,8 +56,8 @@ namespace FastBar
             //   consumerSecret: "");
 
             app.UseFacebookAuthentication(
-               appId: "848511551948016",
-               appSecret: "52722a0f89e9d5c87cead6ff7cd7de00");
+               appId: ConfigurationManager.AppSettings["FBAppId"],
+               appSecret: ConfigurationManager.AppSettings["FBAppSecret"]);
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
