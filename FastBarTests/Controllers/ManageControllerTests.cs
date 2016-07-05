@@ -25,5 +25,11 @@ namespace FastBar.Controllers.Tests
 
             Assert.Fail();
         }
+
+        [TestMethod()]
+        public void AddCCTest()
+        {
+            Assert.Fail();
+        }
     }
 }
