@@ -1,16 +1,90 @@
-﻿.animate{transition: all 500ms; transition-timing-function: cubic-bezier(.42,.79,.45,1);}
+﻿html{width:100%; height:100%;}
+
+.animate{transition: all 500ms; transition-timing-function: cubic-bezier(.42,.79,.45,1);}
 .animate-slow{transition: all 1000ms; transition-timing-function: cubic-bezier(.42,.79,.45,1);}
 .animate-med{transition: all 500ms; transition-timing-function: cubic-bezier(.42,.79,.45,1);}
 .animate-fast{transition: all 250ms; transition-timing-function: cubic-bezier(.42,.79,.45,1);}
 
 .o-1{opacity:1 !important;}
 
-.fastbar-intro{background:transparent url(https://getfastbar.com/Content/Images/intro-bg.jpg) no-repeat center; background-size:cover;}
+.fastbar-intro{background:black url(https://getfastbar.com/Content/Images/intro-bg.jpg) no-repeat center; background-size:cover;}
 .fastbar-logo-lg{background:transparent url(https://getfastbar.com/Content/Images/fastbar-logo-fordarkbg-800w.png) no-repeat center; background-size:contain;}
 .fastbar-logo-sm{background:transparent url(https://getfastbar.com/Content/Images/fastbar-logo-header-36h.png) no-repeat center; background-size:contain;}
 
 .body-content{
     margin-top:60px;
+}
+
+#socialLoginList{
+
+}
+
+.card-display{
+    max-width:700px;
+    background:rgba(0,0,0,.5);
+    margin:0;
+
+    .delete button.close{
+        color: #cc0000;
+        border: none;
+        text-shadow: none;
+        opacity: 0.9;
+    }
+
+    .cc{
+        background: transparent url(../Ico/amex.svg) center no-repeat;
+        height: 23px;
+        background-size: 22px;
+        width: 20px;
+
+        &.Visa{background-image: url(../Ico/visa.svg);}
+        &.American {background-image: url(../Ico/amex.svg);}
+        &.MasterCard{background-image: url(../Ico/mastercard.svg);}
+        &.Discover{background-image: url(../Ico/discover.svg);}
+        &.JCB{background-image: url(../Ico/jcb.svg);}
+        &.Diners {background-image: url(../Ico/diners.svg);}
+    }
+}
+
+#txtCardNumber{        
+    background-repeat:no-repeat;
+    background-size: 22px;    
+    background-position-x: calc(100% - 10px);
+    background-position-y: center;
+
+    &.Visa{background-image: url(../Ico/visa.svg);}
+    &.American {background-image: url(../Ico/amex.svg);}
+    &.MasterCard{background-image: url(../Ico/mastercard.svg);}
+    &.Discover{background-image: url(../Ico/discover.svg);}
+    &.JCB{background-image: url(../Ico/jcb.svg);}
+    &.Diners {background-image: url(../Ico/diners.svg);}
+}
+
+.payment-errors{
+    background: red;
+    color: white;
+    padding: 1px 5px;
+    margin-bottom: 10px;
+    width: 430px;
+}
+
+label span.required{
+    color:#CC0000;
+}
+
+input.form-control.cvc{
+    width:80px;
+}
+
+input.form-control.expiry{
+    width:50px;
+    display:inline-block;
+}
+
+#Facebook{
+    background: #3B5998;
+    border: 1px solid white;
+    font-size: 200%;
 }
 
 .big-ass-button{

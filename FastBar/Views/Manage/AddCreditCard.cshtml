@@ -1,0 +1,97 @@
+﻿@model FastBar.Models.StripeTokenModel
+
+
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript">
+    $(function () {
+            
+        Stripe.setPublishableKey('pk_test_blm4EDFawLZdzJmW5csZw3lK');
+
+        $("#txtCardNumber").on("keyup", function () {
+            var brand = Stripe.card.cardType($(this).val());
+            $(this).attr("class", "form-control animate-fast").addClass(brand);
+        });
+        
+
+        $("#addCreditCard").on("click", function () {
+            $(this).prop("disabled", true);
+
+            var token = {
+                name: $("#txtCardHolderName").val(),
+                number: $("#txtCardNumber").val(),
+                cvc: $("#txtCvc").val(),
+                exp_month: $("#txtExpiryMonth").val(),
+                exp_year: $("#txtExpiryYear").val()
+            }
+
+            console.log("created token");
+            console.log(token);
+
+            Stripe.card.createToken(token, stripeResponseHandler);
+        });    
+
+        function stripeResponseHandler(status, response) {
+        
+            console.log(status);
+            console.log(response);
+        
+            if (response.error) {             
+                $(".payment-errors").removeClass("hidden").text(response.error.message);
+                $("#addCreditCard").prop("disabled", false);
+            } else {
+                $(".payment-errors").addClass("hidden").text("");
+
+                var $form = $('#addCCForm');
+                var token = response.id;
+                $('#hdnToken').val(token);
+                $form.get(0).submit();
+            }
+        }
+    });
+</script>
+
+
+@using (Html.BeginForm("AddCC", "Manage", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form", id = "addCCForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Token, new { id = "hdnToken" })
+
+    <div class="payment-errors animate hidden">This is a placeholder for errors</div>
+    <dl class="dl-horizontal">
+        <dt>
+            <label for="txtCardHolderName">Card Holder Name <span class="required">*</span></label>
+        </dt>
+        <dd>
+            <input class="form-control animate-fast" type="text" id="txtCardHolderName" placeholder="Name as it appears on card" />
+        </dd>
+        <dt>
+            <label for="txtCardNumber">Card Number <span class="required">*</span></label>
+        </dt>
+
+        <dd>
+            <input class="form-control animate-fast" type="text" id="txtCardNumber" placeholder="e.g 4442-4442-4442-4442" />
+        </dd>
+
+        <dt>
+            <label for="txtCvc">CVC <span class="required">*</span></label>
+        </dt>
+
+        <dd>
+            <input class="form-control animate-fast cvc" type="text" id="txtCvc" placeholder="e.g 987" />
+        </dd>
+
+        <dt>
+            <label for="txtExpiryMonth">Expiry (MM/YY) <span class="required">*</span></label>
+        </dt>
+
+        <dd>
+            <input class="form-control animate-fast expiry" type="text" id="txtExpiryMonth" placeholder="01" />
+            <input class="form-control animate-fast expiry" type="text" id="txtExpiryYear" placeholder="17" />
+        </dd>
+
+        <dt></dt>
+        <dd>
+            <button class="btn btn-default animate-fast" id="addCreditCard">Add Credit Cart</button>
+        </dd>               
+    </dl>
+}

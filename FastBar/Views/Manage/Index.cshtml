@@ -1,25 +1,28 @@
-﻿@model FastBar.Models.IndexViewModel
+﻿@using FastBar.Models
+
+@model FastBar.Models.IndexViewModel
 @{
     ViewBag.Title = "Manage";
 }
-
-<h2>@ViewBag.Title.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
     <h4>Change your account settings</h4>
     <hr />
+
+
+    <h6>Login Settings</h6>
     <dl class="dl-horizontal">
         <dt>Password:</dt>
         <dd>
             [
             @if (Model.HasPassword)
             {
-                @Html.ActionLink("Change your password", "ChangePassword")
+            @Html.ActionLink("Change your password", "ChangePassword")
             }
             else
             {
-                @Html.ActionLink("Create", "SetPassword")
+            @Html.ActionLink("Create", "SetPassword")
             }
             ]
         </dd>
@@ -27,61 +30,37 @@
         <dd>
             @Model.Logins.Count [
             @Html.ActionLink("Manage", "ManageLogins") ]
-        </dd>
-        @*
-            Phone Numbers can used as a second factor of verification in a two-factor authentication system.
-             
-             See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-                for details on setting up this ASP.NET application to support two-factor authentication using SMS.
-             
-             Uncomment the following block after you have set up two-factor authentication
-        *@
-        @*  
-            <dt>Phone Number:</dt>
-            <dd>
-                @(Model.PhoneNumber ?? "None")
-                @if (Model.PhoneNumber != null)
-                {
-                    <br />
-                    <text>[&nbsp;&nbsp;@Html.ActionLink("Change", "AddPhoneNumber")&nbsp;&nbsp;]</text>
-                    using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>[<input type="submit" value="Remove" class="btn-link" />]</text>
-                    }
-                }
-                else
-                {
-                    <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")
-                }
-            </dd>
-        *@
-        <dt>Two-Factor Authentication:</dt>
-        <dd>
-            <p>
-                There are no two-factor authentication providers configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
-                for details on setting up this ASP.NET application to support two-factor authentication.
-            </p>
-            @*@if (Model.TwoFactor)
-                {
-                    using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>Enabled
-                        <input type="submit" value="Disable" class="btn btn-link" />
-                        </text>
-                    }
-                }
-                else
-                {
-                    using (Html.BeginForm("EnableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <text>Disabled
-                        <input type="submit" value="Enable" class="btn btn-link" />
-                        </text>
-                    }
-                }*@
-        </dd>
+        </dd>        
     </dl>
+    <hr />
+
+    <h6>Payment Information</h6>
+    @if (Model.creditCard.hasCard == false)
+    {
+        @Html.Partial("AddCreditCard", new StripeTokenModel { });
+    }
+    else
+    {       
+        <div class="card-display row">
+            <div class="col-xs-1 col-md-1 cc @Html.DisplayFor(Model => Model.creditCard.CreditCardType)"></div>
+            <div class="col-xs-4 col-md-4 name">@Html.DisplayFor(Model => Model.creditCard.CardHolderName)</div>
+            <div class="col-xs-3 col-md-3 number">@Html.DisplayFor(Model => Model.creditCard.CardNumber)</div>            
+            <div class="col-xs-3 col-md-3 expiration">@Html.DisplayFor(Model => Model.creditCard.ExpirationMonth) / @Html.DisplayFor(Model => Model.creditCard.ExpirationYear)</div>
+            <div class="col-xs-1 col-md-1 delete"><button type="button" onclick="DeleteCC();" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+        </div>
+
+        using (Html.BeginForm("DeleteCC", "Manage", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form", id = "deleteCC" }))
+        {
+            @Html.AntiForgeryToken()
+        }
+
+        <script type="text/javascript">
+            function DeleteCC() {
+                console.log("deleting");
+                var $form = $('#deleteCC').get(0).submit();
+            }
+        </script>
+    }
+    
+
 </div>

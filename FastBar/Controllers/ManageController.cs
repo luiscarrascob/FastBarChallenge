@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using FastBar.Models;
+using Stripe;
 
 namespace FastBar.Controllers
 {
@@ -15,15 +16,18 @@ namespace FastBar.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        
 
         public ManageController()
-        {
+        {            
+            
         }
 
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            
         }
 
         public ApplicationSignInManager SignInManager
@@ -64,14 +68,26 @@ namespace FastBar.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+            var token = UserManager.FindById(User.Identity.GetUserId()).CCToken;
+            var creditCard = new CreditCardModel { hasCard = false };
+
+            if (token != null) {
+                creditCard.hasCard = true;
+                await RetrieveCardInfo(token, creditCard);
+            }
+
             var model = new IndexViewModel
             {
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId),
+                creditCard = creditCard
             };
+
+            //TODO: Try to retrieve CC details from database
+
             return View(model);
         }
 
@@ -97,6 +113,65 @@ namespace FastBar.Controllers
                 message = ManageMessageId.Error;
             }
             return RedirectToAction("ManageLogins", new { Message = message });
+        }
+
+
+        public ActionResult AddCC()
+        {
+            return View("Index", "Manage");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddCC(StripeTokenModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var userId = User.Identity.GetUserId();
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            user.CCToken = model.Token;
+
+            await UserManager.UpdateAsync(user);
+
+            return RedirectToAction("Index", "Manage");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteCC()
+        {            
+            var userId = User.Identity.GetUserId();
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            user.CCToken = null;
+
+            await UserManager.UpdateAsync(user);
+
+            return RedirectToAction("Index", "Manage");
+        }
+
+        private static async Task<string> RetrieveCardInfo(string token, CreditCardModel creditcardmodel)
+        {
+            return await Task.Run(() =>
+            {
+                var tokenService = new StripeTokenService();
+                StripeToken stripeToken = tokenService.Get(token);                
+
+                creditcardmodel.Token = stripeToken.Id;
+                if (stripeToken.StripeCard != null)
+                {
+                    creditcardmodel.hasCard = true;
+                    creditcardmodel.CardNumber = "****" + stripeToken.StripeCard.Last4;
+                    creditcardmodel.ExpirationMonth = stripeToken.StripeCard.ExpirationMonth;
+                    creditcardmodel.ExpirationYear = stripeToken.StripeCard.ExpirationYear;
+                    creditcardmodel.CreditCardType = stripeToken.StripeCard.Brand;
+                    creditcardmodel.CardHolderName = stripeToken.StripeCard.Name;
+                }
+                
+                return stripeToken.Id;           
+            });
         }
 
         //

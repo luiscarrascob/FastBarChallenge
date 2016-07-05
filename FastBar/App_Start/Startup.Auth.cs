@@ -54,9 +54,9 @@ namespace FastBar
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "848511551948016",
+               appSecret: "52722a0f89e9d5c87cead6ff7cd7de00");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{

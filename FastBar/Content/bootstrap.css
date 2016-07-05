@@ -1449,6 +1449,7 @@ dl {
 dt,
 dd {
   line-height: 1.42857143;
+  margin-bottom: 10px;
 }
 dt {
   font-weight: bold;
@@ -2578,14 +2579,14 @@ output {
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
 .form-control::-moz-placeholder {
-  color: #888888;
+  color: #AAA;
   opacity: 1;
 }
 .form-control:-ms-input-placeholder {
-  color: #888888;
+  color: #AAA;
 }
 .form-control::-webkit-input-placeholder {
-  color: #888888;
+  color: #AAA;
 }
 .form-control::-ms-expand {
   border: 0;
